@@ -25,7 +25,7 @@ jobs:
     working_directory: ~/laravel
 
     steps:
-      - checkout
+      - checkout work
 
       #- run: chmod -R 777 storage
       - run: cp .env.circleci .env
@@ -67,10 +67,10 @@ jobs:
       #- run: npm run production
 
       # prepare the Laravel
-      - run:
-          name: Laravel start
-          command: |
-            php artisan key:generate
+      #- run:
+      #    name: Laravel start
+      #    command: |
+      #      php artisan key:generate
       #      php artisan migrate
       #- run: php artisan key:generate
       #- run: php artisan migrate

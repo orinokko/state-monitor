@@ -7,8 +7,8 @@ namespace Orinoko\StateMonitor;
 
 class Monitor
 {
-    public function getAllResults(){
-        $result = 'fas';
+    public function checkFacade(){
+        $result = 'facade run';
         return $result;
     }
 }
