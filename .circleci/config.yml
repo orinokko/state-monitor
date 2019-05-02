@@ -25,7 +25,7 @@ jobs:
     working_directory: ~/laravel
 
     steps:
-      - checkout work
+      - checkout
 
       #- run: chmod -R 777 storage
       - run: cp .env.circleci .env
