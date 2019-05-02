@@ -1,11 +1,11 @@
 <?php
-namespace Orinoko\StateMonitor\Tests;
+namespace Orinoko\StateMonitor\Test;
 
 use Orinoko\StateMonitor\Monitor;
 use Orinoko\StateMonitor\MonitorServiceProvider;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Orchestra\Testbench\TestCase as Orchestra;
 
-class TestCase extends OrchestraTestCase
+class TestCase extends Orchestra
 {
     /**
      * Load package service provider

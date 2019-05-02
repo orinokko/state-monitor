@@ -1,5 +1,5 @@
 <?php
-namespace Orinoko\StateMonitor\Tests\Unit;
+namespace Orinoko\StateMonitor\Test;
 
 use Monitor;
 use Orinoko\StateMonitor\Tests\TestCase;
