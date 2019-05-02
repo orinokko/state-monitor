@@ -1,0 +1,35 @@
+{
+    "name": "orinokko/state-monitor",
+    "description": "State Monitor",
+    "authors": [
+        {
+            "name": "Artem Ulyanchenko",
+            "email": "a@whiteweb.ua",
+            "homepage": "https://github.com/orinokko"
+        }
+    ],
+    "type": "library",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">= 7.1",
+        "laravel/framework": "5.7.*|5.8.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Orinoko\\StateMonitor\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Orinoko\\StateMonitor\\MonitorServiceProvider"
+            ],
+            "aliases": {
+                "StateMonitor": "Orinoko\\StateMonitor\\Facades\\Monitor"
+            }
+        }
+    }
+}
