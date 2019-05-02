@@ -30,9 +30,9 @@ jobs:
       #- run: chmod -R 777 storage
       - run: cp .env.circleci .env
 
-      - run:
-          name: Install PHP exts
-          command: |
+      #- run:
+      #    name: Install PHP exts
+      #    command: |
       #      sudo docker-php-ext-install zip
       #      sudo docker-php-ext-install pdo_mysql
       #      sudo apt install -y mysql-client
