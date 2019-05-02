@@ -2,6 +2,7 @@
     "name": "orinokko/state-monitor",
     "description": "State Monitor",
     "homepage": "https://github.com/orinokko/state-monitor",
+    "license": "GPL3",
     "authors": [
         {
             "name": "Artem Ulyanchenko",
