@@ -25,7 +25,10 @@
     "autoload-dev": {
         "psr-4": {
             "Orinoko\\StateMonitor\\Tests\\": "tests/"
-        }
+        },
+        "classmap": [
+            "tests/TestCase.php"
+        ]
     },
     "extra": {
         "laravel": {
