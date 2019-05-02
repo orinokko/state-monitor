@@ -1,5 +1,5 @@
 <?php
-namespace Orinoko\StateMonitor\Test;
+namespace Orinoko\StateMonitor\Tests;
 
 use Orinoko\StateMonitor\Monitor;
 use Orinoko\StateMonitor\MonitorServiceProvider;
