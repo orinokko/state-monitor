@@ -1,6 +1,6 @@
 <?php
 
-namespace WW2UA\Monitor\Http;
+namespace Orinoko\StateMonitor\Http;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
