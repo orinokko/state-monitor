@@ -79,8 +79,8 @@ jobs:
       - run:
           name: Run Tests
           command: |
-      #      ./vendor/bin/phpunit
-              composer test
+            ./vendor/bin/phpunit
+      #        composer test
       #- run: ./vendor/bin/phpunit
       #- run: ./vendor/bin/codecept build
       #- run: ./vendor/bin/codecept run
