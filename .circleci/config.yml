@@ -27,7 +27,7 @@ jobs:
     steps:
       - checkout
 
-      - run: chmod -R 777 storage
+      #- run: chmod -R 777 storage
       - run: cp .env.circleci .env
 
       - run:
