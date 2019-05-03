@@ -30,7 +30,7 @@
         "psr-4": {
             "Orinoko\\StateMonitor\\Test\\": "tests"
         }
-    },.
+    },
     "scripts": {
         "test": "phpunit"
     },
