@@ -4,6 +4,8 @@ namespace Orinoko\StateMonitor\Commands;
 
 use Illuminate\Console\Command;
 use Google\Cloud\BigQuery\BigQueryClient;
+use Illuminate\Support\Facades\Mail;
+use Orinoko\StateMonitor\Mail\TestEmail;
 
 class CheckCommand extends Command
 {
@@ -58,6 +60,9 @@ class CheckCommand extends Command
                 $this->error('Local email channel activated, but without recipient address.');
             }else{
                 $this->info('Local email channel activated and recipient address provided.');
+                Mail::to($alertEmail)
+                    ->send(new TestEmail());
+                $this->info('Test email sent to specified address.');
             }
         }
         if($useBigQuery){

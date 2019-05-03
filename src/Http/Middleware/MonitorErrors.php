@@ -39,7 +39,7 @@ class MonitorErrors
             /*dump($code);
             dump($message);
             dump($file);
-            dump($line);*/
+            dump($line);/**/
             //dump($traceString);
             if(config('state-monitor.use-local')){
                 Mail::to(config('state-monitor.alert-email'))
@@ -48,7 +48,9 @@ class MonitorErrors
                 // send to mailer
             }
             // save to storage
-
+            if(config('state-monitor.use-bigquery')){
+                //dd(1);
+            }
         }
 
         return $response;
