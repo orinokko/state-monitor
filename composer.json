@@ -2,6 +2,7 @@
     "name": "orinokko/state-monitor",
     "description": "State Monitor",
     "homepage": "https://github.com/orinokko/state-monitor",
+    "license": "GPL3",
     "authors": [
         {
             "name": "Artem Ulyanchenko",
@@ -11,8 +12,10 @@
     ],
     "type": "library",
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "php": ">= 7.1"
+        "php": ">= 7.1",
+        "google/cloud-bigquery": "^1.6"
     },
     "require-dev": {
         "orchestra/testbench": "~3.4.2|~3.5.0|~3.6.0|~3.7.0",
