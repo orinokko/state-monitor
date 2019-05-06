@@ -40,18 +40,23 @@ class CheckCommand extends Command
      */
     public function handle()
     {
+        $appName = config('state-monitor.app-name');
         $useLocal = config('state-monitor.use-local');
         $alertEmail = config('state-monitor.alert-email');
         $useBigQuery = config('state-monitor.use-bigquery');
         $projectBigQuery = config('state-monitor.bigquery-project');
         $keyBigQuery = config('state-monitor.bigquery-path');
         $this->info('Current settings:');
+        $this->line('STATE_MONITOR_APP='.$appName);
         $this->line('STATE_MONITOR_LOCAL_EMAIL='.$useLocal);
         $this->line('STATE_MONITOR_ALERT_EMAIL='.$alertEmail);
         $this->line('STATE_MONITOR_BIGQUERY='.$useBigQuery);
         $this->line('STATE_MONITOR_GOOGLE_CLOUD_PROJECT='.$projectBigQuery);
         $this->line('STATE_MONITOR_GOOGLE_APPLICATION_CREDENTIALS='.$keyBigQuery);
 
+        if(!$appName){
+            $this->error('You need to provide app identifier in STATE_MONITOR_APP.');
+        }
         if(!$useLocal && !$useBigQuery){
             $this->error('All outgoing channels are turned off.');
         }

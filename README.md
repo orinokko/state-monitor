@@ -12,6 +12,10 @@ composer require orinokko/state-monitor
 ```
 
 ### 2. Add to .env
+The service identifier of your application
+```
+STATE_MONITOR_APP=AppName
+```
 Whether or not to use mailing
 ```
 STATE_MONITOR_LOCAL_EMAIL=true
@@ -23,8 +27,8 @@ STATE_MONITOR_BIGQUERY=true
 ```
 Settings for BigQuery, more [details](https://github.com/googleapis/google-cloud-php/blob/master/AUTHENTICATION.md)
 ```
-GOOGLE_CLOUD_PROJECT=[monitor-123456]
-GOOGLE_APPLICATION_CREDENTIALS=[storage/monitor.json]
+STATE_MONITOR_GOOGLE_CLOUD_PROJECT=[monitor-123456]
+STATE_MONITOR_GOOGLE_APPLICATION_CREDENTIALS=[storage/monitor.json]
 ```
 
 ### 3. Run config test
