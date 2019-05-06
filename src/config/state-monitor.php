@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'app-name' => env('STATE_MONITOR_APP', ''),
     'use-local' => env('STATE_MONITOR_LOCAL_EMAIL', 'true'),
     'alert-email' => env('STATE_MONITOR_ALERT_EMAIL', ''),
     'use-bigquery' => env('STATE_MONITOR_BIGQUERY', 'true'),

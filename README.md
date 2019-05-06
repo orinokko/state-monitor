@@ -1,6 +1,6 @@
 # storage part of state-monitor
 
-[![Packagist](https://img.shields.io/packagist/v/orinokko/state-monitor.svg)](https://packagist.org/packages/orinokko/state-monitor)
+[![Packagist](https://img.shields.io/github/release/orinokko/state-monitor.svg)](https://packagist.org/packages/orinokko/state-monitor)
 [![build status](https://circleci.com/gh/orinokko/state-monitor/tree/master.svg?style=svg&circle-token=834d362e516162f821fa93927da3dee174120ed0)](https://circleci.com/gh/orinokko/state-monitor/tree/master)
 
 ## Installation
@@ -38,6 +38,11 @@ You must get one of or both lines
 Local email channel activated and recipient address provided.
 BigQuery channel activated and connection settings provided.
 ```
+
+## Advices
+### If the site package is used in different applications
+
+Ensure that real data is listed in APP_NAME and APP_URL. They are used to find the sender.
 
 ## Usage
 

@@ -4,7 +4,7 @@ namespace Orinoko\StateMonitor;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
-use Orinoko\StateMonitor\Facades\Monitor;
+use Orinoko\StateMonitor\Monitor;
 
 class MonitorServiceProvider extends ServiceProvider
 {
@@ -30,6 +30,10 @@ class MonitorServiceProvider extends ServiceProvider
                 Commands\CheckCommand::class,
             ]);
         }
+
+        // middleware
+        $this->app['router']->pushMiddlewareToGroup('web', Http\Middleware\MonitorErrors::class);
+        $this->app['router']->pushMiddlewareToGroup('api', Http\Middleware\MonitorErrors::class);
     }
 
     /**
@@ -48,8 +52,8 @@ class MonitorServiceProvider extends ServiceProvider
         $this->app->make('Orinoko\StateMonitor\Http\MonitorController');
         // facade
         $loader = AliasLoader::getInstance();
-        $loader->alias('Monitor', Monitor::class);
-        $this->app->singleton('Monitor', function () {
+        $loader->alias('monitor', Monitor::class);
+        $this->app->singleton('monitor', function () {
             return new Monitor();
         });
         // middleware
