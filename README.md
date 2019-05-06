@@ -42,7 +42,7 @@ BigQuery channel activated and connection settings provided.
 ## Advices
 ### If the site package is used in different applications
 
-Ensure that real data is listed in APP_NAME and APP_URL. They are used to find the sender.
+Ensure that real data is listed in APP_NAME and APP_URL. They are can be used to find the sender.
 
 ## Usage
 
