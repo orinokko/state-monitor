@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Google\Cloud\BigQuery\BigQueryClient;
 use Illuminate\Support\Facades\Mail;
 use Orinoko\StateMonitor\Mail\TestEmail;
+use Orinoko\StateMonitor\Monitor;
 
 class CheckCommand extends Command
 {
@@ -14,7 +15,7 @@ class CheckCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'monitor:check';
+    protected $signature = 'monitor:install';
 
     /**
      * The console command description.
@@ -22,6 +23,7 @@ class CheckCommand extends Command
      * @var string
      */
     protected $description = 'Check settings';
+
 
     /**
      * Create a new command instance.
@@ -77,7 +79,38 @@ class CheckCommand extends Command
                 } catch (DomainException $exception) {
                     $this->error($exception->getMessage());
                 }
-                $this->info('BigQuery channel activated and connection settings provided.');
+                $this->info('BigQuery channel activated and connection settings provided. to configure the database...');
+                // -----------------------------------------------
+                // DATASETS
+                // -----------------------------------------------
+                $datasets = $bigQuery->datasets();
+                $monitorDataset = null;
+                foreach ($datasets as $dataset) {
+                    if($dataset->id()=='monitor'){
+                        $this->info('Dataset already exist.');
+                        $monitorDataset = $dataset;
+                    }
+                }
+                if(!$monitorDataset){
+                    $monitorDataset = $bigQuery->createDataset('monitor');
+                    $this->info('Dataset not found - created.');
+                }
+                // -----------------------------------------------
+                // TABLES
+                // -----------------------------------------------
+                $errorTable = null;
+                $tables = $monitorDataset->tables();
+                foreach ($tables as $table) {
+                    if($table->id()=='errors'){
+                        $this->info('Table for errors already exist.');
+                        $errorTable = $table;
+                    }
+                }
+                if(!$errorTable){
+                    //print_r(json_encode(Monitor::$errorsSchema));
+                    $errorTable = $monitorDataset->createTable('errors',['schema' => Monitor::$errorsSchema]);
+                    $this->info('Table for errors not found - created.');
+                }
             }else {
                 $this->info('BigQuery channel activated, but without connection settings.');
             }
