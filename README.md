@@ -3,6 +3,8 @@
 [![Packagist](https://img.shields.io/github/release/orinokko/state-monitor.svg)](https://packagist.org/packages/orinokko/state-monitor)
 [![build status](https://circleci.com/gh/orinokko/state-monitor/tree/master.svg?style=svg&circle-token=834d362e516162f821fa93927da3dee174120ed0)](https://circleci.com/gh/orinokko/state-monitor/tree/master)
 
+Collects data about exceptions, manual events and some logs. Supports writing to BigQuery. For further data analysis, you can use Google Data Studio or your own application.
+
 ## Installation
 
 ### 1. Require the Package

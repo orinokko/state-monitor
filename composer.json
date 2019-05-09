@@ -2,6 +2,7 @@
     "name": "orinokko/state-monitor",
     "description": "State Monitor",
     "homepage": "https://github.com/orinokko/state-monitor",
+    "keywords": ["laravel", "exceptions", "monitor", "analysis"],
     "license": "GPL-3.0-or-later",
     "authors": [
         {
