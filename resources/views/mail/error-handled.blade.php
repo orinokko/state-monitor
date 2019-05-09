@@ -1,7 +1,15 @@
 Time: {{ $data['time'] }} <br>
 App Name: {{ $data['app']['name'] }} <br>
 App Url: {{ $data['app']['url'] }} <br>
+<hr>
 Current Url: {{ $data['url'] }} <br>
+Method: {{ $data['method'] }} <br>
+@if($data['params'])
+Params: <br>
+@foreach($data['params'] as $k=>$v)
+    {{ $k }}: {{ $v }} <br>
+@endforeach
+@endif
 <hr>
 Code: {{ $data['code'] }} <br>
 Message: {{ $data['message'] }} <br>
