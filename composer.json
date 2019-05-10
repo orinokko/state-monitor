@@ -16,7 +16,8 @@
     "prefer-stable": true,
     "require": {
         "php": ">= 7.1",
-        "google/cloud-bigquery": "^1.6"
+        "google/cloud-bigquery": "^1.6",
+        "illuminate/support": "~5.5.0|~5.6.0|~5.7.0|~5.8.0"
     },
     "require-dev": {
         "orchestra/testbench": "~3.4.2|~3.5.0|~3.6.0|~3.7.0",
