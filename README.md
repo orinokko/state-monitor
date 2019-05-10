@@ -62,10 +62,18 @@ Ensure that real data is listed in APP_NAME and APP_URL. They are can be used to
 Exceptions automatically will be caught on web and api middleware groups.
 Also exist middleware for custom routes and other:
 ```php
-->middleware('state-monitor-errorss')
+->middleware('state-monitor-errors')
+```
+### Checks monitoring
+Called manually
+```php
+Monitor::validateRequest($type,$url,$method,$params=[])
 ```
 ### Events monitoring
-later
+Called manually
+```php
+Monitor::storeEvent($message,$url='',$method='',$params=[])
+```
 ### Database monitoring
 later
 ## Contribution

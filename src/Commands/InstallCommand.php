@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Orinoko\StateMonitor\Mail\TestEmail;
 use Orinoko\StateMonitor\Monitor;
 
-class CheckCommand extends Command
+class InstallCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -22,7 +22,7 @@ class CheckCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Check settings';
+    protected $description = 'Check installation';
 
 
     /**
@@ -98,6 +98,7 @@ class CheckCommand extends Command
                 // -----------------------------------------------
                 // TABLES
                 // -----------------------------------------------
+                // errors
                 $errorTable = null;
                 $tables = $monitorDataset->tables();
                 foreach ($tables as $table) {
@@ -107,9 +108,34 @@ class CheckCommand extends Command
                     }
                 }
                 if(!$errorTable){
-                    //print_r(json_encode(Monitor::$errorsSchema));
                     $errorTable = $monitorDataset->createTable('errors',['schema' => Monitor::$errorsSchema]);
                     $this->info('Table for errors not found - created.');
+                }
+                // checks
+                $checksTable = null;
+                $tables = $monitorDataset->tables();
+                foreach ($tables as $table) {
+                    if($table->id()=='checks'){
+                        $this->info('Table for checks already exist.');
+                        $checksTable = $table;
+                    }
+                }
+                if(!$checksTable){
+                    $checksTable = $monitorDataset->createTable('checks',['schema' => Monitor::$checksSchema]);
+                    $this->info('Table for checks not found - created.');
+                }
+                // events
+                $eventsTable = null;
+                $tables = $monitorDataset->tables();
+                foreach ($tables as $table) {
+                    if($table->id()=='events'){
+                        $this->info('Table for events already exist.');
+                        $eventsTable = $table;
+                    }
+                }
+                if(!$eventsTable){
+                    $eventsTable = $monitorDataset->createTable('events',['schema' => Monitor::$eventsSchema]);
+                    $this->info('Table for events not found - created.');
                 }
             }else {
                 $this->info('BigQuery channel activated, but without connection settings.');

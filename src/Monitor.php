@@ -2,13 +2,10 @@
 
 namespace Orinoko\StateMonitor;
 
-//use GuzzleHttp\RequestOptions;
-//use Orinoko\Crawler\CrawlerObserver;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Orinoko\StateMonitor\Mail\ErrorHandled;
 use Google\Cloud\BigQuery\BigQueryClient;
-use Google\Cloud\Core\ExponentialBackoff;
 
 class Monitor
 {
@@ -89,12 +86,141 @@ class Monitor
         ]
     ];
 
+    /**
+     * Schema for checks table.
+     *
+     * @var array
+     */
+    public static $checksSchema = [
+        'fields' => [
+            [
+                'name' => 'type',
+                'type' => 'STRING',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'status',
+                'type' => 'BOOLEAN',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'time',
+                'type' => 'DATETIME',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'app_id',
+                'type' => 'STRING',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'url',
+                'type' => 'STRING',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'method',
+                'type' => 'STRING',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'params',
+                'type' => 'RECORD',
+                'mode' => 'REPEATED',
+                "fields"=> [
+                    [ "name"=> "key", "type"=> "STRING"],
+                    [ "name"=> "value", "type"=> "STRING"]
+                ]
+            ],
+        ]
+    ];
+
+    /**
+     * Schema for events table.
+     *
+     * @var array
+     */
+    public static $eventsSchema = [
+        'fields' => [
+            [
+                'name' => 'message',
+                'type' => 'STRING',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'time',
+                'type' => 'DATETIME',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'app_id',
+                'type' => 'STRING',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'url',
+                'type' => 'STRING'
+            ],
+            [
+                'name' => 'method',
+                'type' => 'STRING'
+            ],
+            [
+                'name' => 'params',
+                'type' => 'RECORD',
+                'mode' => 'REPEATED',
+                "fields"=> [
+                    [ "name"=> "key", "type"=> "STRING"],
+                    [ "name"=> "value", "type"=> "STRING"]
+                ]
+            ],
+        ]
+    ];
+
+    /**
+     * Sample func
+     *
+     * @return string
+     */
     public function checkFacade()
     {
-        $result = 'facade run';
+        $result = 'facade exist';
         return $result;
     }
 
+    /**
+     * Save data to BigQuery
+     * @param  string $dataset_id
+     * @param  string $table_id
+     * @param  array $data
+     * @return array
+     */
+    public static function storeData($dataset_id,$table_id,$data)
+    {
+        $bigQuery = new BigQueryClient();
+        $dataset = $bigQuery->dataset($dataset_id);
+        $table = $dataset->table($table_id);
+
+        $insertResponse = $table->insertRows([
+            ['data' => $data],
+            // additional rows can go here
+        ]);
+        if ($insertResponse->isSuccessful()) {
+            return ['error'=>0];
+        } else {
+            return ['error'=>1,'errors'=>$insertResponse->failedRows()];
+            /*foreach ($insertResponse->failedRows() as $row) {
+                return ['error'=>1,'errors'=>$row['errors']];
+            }*/
+        }
+    }
+
+    /**
+     * Prepare request info (for errors)
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Response $response
+     * @return void
+     */
     public function processRequest($request,$response)
     {
         // Same as getallheaders(), just with lowercase keys
@@ -127,6 +253,21 @@ class Monitor
         }
     }
 
+    /**
+     * Store request info (for errors)
+     * @param  string $time
+     * @param  string $app_id
+     * @param  string $url
+     * @param  string $method
+     * @param  array $params
+     * @param  string $code
+     * @param  string $message
+     * @param  string $file
+     * @param  string $line
+     * @param  array $headers
+     * @param  array $trace
+     * @return array
+     */
     public function saveError($time,$app_id,$url,$method,$params,$code,$message,$file,$line,$headers,$trace)
     {
         // prepare data
@@ -153,21 +294,65 @@ class Monitor
             $data['trace'][] = ['file'=>$v['file'],'line'=>$v['line']];
         }
 
-        // client
-        $bigQuery = new BigQueryClient();
-        $dataset = $bigQuery->dataset('monitor');
-        $table = $dataset->table('errors');
+        return self::storeData('monitor','errors',$data);
+    }
 
-        $insertResponse = $table->insertRows([
-            ['data' => $data],
-            // additional rows can go here
-        ]);
-        if ($insertResponse->isSuccessful()) {
-            return ['error'=>0];
-        } else {
-            foreach ($insertResponse->failedRows() as $row) {
-                return ['error'=>1,'errors'=>$row['errors']];
-            }
+    /**
+     * Prepare request info (for errors)
+     * @param  string $type request direction (incoming|outgoing)
+     * @param  string $url
+     * @param  string $method
+     * @param  array $params
+     * @return bool
+     */
+    public function validateRequest($type,$url,$method,$params=[])
+    {
+        $status = true;
+        // ToDo: some validation logic for status
+        // --
+        // store data
+        $time = Carbon::now()->toDateTimeString();
+        $app_id = config('state-monitor.app-name');
+        $data = [
+            'time' => $time,
+            'app_id' => $app_id,
+            'url' => $url,
+            'method' => $method,
+            'params' => [],
+            'type' => $type,
+            'status' => $status,
+        ];
+        foreach ($params as $k=>$v){
+            $data['params'][] = ['key'=>$k,'value'=>$v];
         }
+        $result = self::storeData('monitor','checks',$data);
+        return $status;
+    }
+
+    /**
+     * Prepare request info (for errors)
+     * @param  string $message event description
+     * @param  string $url
+     * @param  string $method
+     * @param  array $params
+     * @return array
+     */
+    public function storeEvent($message,$url='',$method='',$params=[])
+    {
+        // store data
+        $time = Carbon::now()->toDateTimeString();
+        $app_id = config('state-monitor.app-name');
+        $data = [
+            'time' => $time,
+            'app_id' => $app_id,
+            'url' => $url,
+            'method' => $method,
+            'params' => [],
+            'message' => $message,
+        ];
+        foreach ($params as $k=>$v){
+            $data['params'][] = ['key'=>$k,'value'=>$v];
+        }
+        return self::storeData('monitor','events',$data);
     }
 }

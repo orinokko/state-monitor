@@ -4,7 +4,7 @@ namespace Orinoko\StateMonitor;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
-use Orinoko\StateMonitor\Monitor;
+use Orinoko\StateMonitor\Facades\Monitor as MonitorFacade;
 
 class MonitorServiceProvider extends ServiceProvider
 {
@@ -27,7 +27,7 @@ class MonitorServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                Commands\CheckCommand::class,
+                Commands\InstallCommand::class,
             ]);
         }
 
@@ -52,7 +52,7 @@ class MonitorServiceProvider extends ServiceProvider
         $this->app->make('Orinoko\StateMonitor\Http\MonitorController');
         // facade
         $loader = AliasLoader::getInstance();
-        $loader->alias('monitor', Monitor::class);
+        $loader->alias('Monitor', MonitorFacade::class);
         $this->app->singleton('monitor', function () {
             return new Monitor();
         });
