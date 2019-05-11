@@ -73,6 +73,8 @@ class InstallCommand extends Command
                     ->send(new TestEmail());
                 $this->info('Test email sent to specified address.');
             }
+        }else{
+            $this->info('Local email channel disabled.');
         }
         if($useBigQuery){
             if($projectBigQuery && $keyBigQuery) {
@@ -81,7 +83,7 @@ class InstallCommand extends Command
                 } catch (DomainException $exception) {
                     $this->error($exception->getMessage());
                 }
-                $this->info('BigQuery channel activated and connection settings provided. to configure the database...');
+                $this->info('BigQuery channel activated and connection settings provided. Try configure the database...');
                 // -----------------------------------------------
                 // DATASETS
                 // -----------------------------------------------
@@ -155,6 +157,8 @@ class InstallCommand extends Command
             }else {
                 $this->info('BigQuery channel activated, but without connection settings.');
             }
+        }else{
+            $this->info('BigQuery channel disabled.');
         }
     }
 }
