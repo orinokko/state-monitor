@@ -4,6 +4,7 @@ namespace Orinoko\StateMonitor;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\DB;
 use Orinoko\StateMonitor\Facades\Monitor as MonitorFacade;
 
 class MonitorServiceProvider extends ServiceProvider
@@ -34,6 +35,12 @@ class MonitorServiceProvider extends ServiceProvider
         // middleware
         $this->app['router']->pushMiddlewareToGroup('web', Http\Middleware\MonitorErrors::class);
         $this->app['router']->pushMiddlewareToGroup('api', Http\Middleware\MonitorErrors::class);
+
+        if(config('state-monitor.log-queries')) { // ToDo: remote control
+            DB::listen(function ($query) {
+                MonitorFacade::storeQuery($query->sql,$query->bindings,$query->time);
+            });
+        }
     }
 
     /**
