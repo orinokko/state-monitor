@@ -6,10 +6,7 @@
 Collects data about exceptions, manual events and some logs. Supports writing to BigQuery. For further data analysis, you can use Google Data Studio or your own application.
 
 For example:
-![Errors](https://raw.githubusercontent.com/orinokko/state-monitor/work/docs/img/1.png | width=100)
-![Events](https://raw.githubusercontent.com/orinokko/state-monitor/work/docs/img/2.png =250x250)
-![Checks](https://raw.githubusercontent.com/orinokko/state-monitor/work/docs/img/3.png)
-![Queries](https://raw.githubusercontent.com/orinokko/state-monitor/work/docs/img/4.png)
+![Errors](https://raw.githubusercontent.com/orinokko/state-monitor/work/docs/img/1.png)
 ## Installation
 
 ### 1. Require the Package
