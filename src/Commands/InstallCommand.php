@@ -48,6 +48,7 @@ class InstallCommand extends Command
         $useBigQuery = config('state-monitor.use-bigquery');
         $projectBigQuery = config('state-monitor.bigquery-project');
         $keyBigQuery = config('state-monitor.bigquery-path');
+        $logQueries = config('state-monitor.log-queries');
         $this->info('Current settings:');
         $this->line('STATE_MONITOR_APP='.$appName);
         $this->line('STATE_MONITOR_LOCAL_EMAIL='.$useLocal);
@@ -55,6 +56,7 @@ class InstallCommand extends Command
         $this->line('STATE_MONITOR_BIGQUERY='.$useBigQuery);
         $this->line('STATE_MONITOR_GOOGLE_CLOUD_PROJECT='.$projectBigQuery);
         $this->line('STATE_MONITOR_GOOGLE_APPLICATION_CREDENTIALS='.$keyBigQuery);
+        $this->line('STATE_MONITOR_LOG_QUERIES='.$logQueries);
 
         if(!$appName){
             $this->error('You need to provide app identifier in STATE_MONITOR_APP.');
@@ -136,6 +138,19 @@ class InstallCommand extends Command
                 if(!$eventsTable){
                     $eventsTable = $monitorDataset->createTable('events',['schema' => Monitor::$eventsSchema]);
                     $this->info('Table for events not found - created.');
+                }
+                // events
+                $queriesTable = null;
+                $tables = $monitorDataset->tables();
+                foreach ($tables as $table) {
+                    if($table->id()=='queries'){
+                        $this->info('Table for queries already exist.');
+                        $queriesTable = $table;
+                    }
+                }
+                if(!$queriesTable){
+                    $queriesTable = $monitorDataset->createTable('queries',['schema' => Monitor::$queriesSchema]);
+                    $this->info('Table for queries not found - created.');
                 }
             }else {
                 $this->info('BigQuery channel activated, but without connection settings.');

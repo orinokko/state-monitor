@@ -178,6 +178,62 @@ class Monitor
     ];
 
     /**
+     * Schema for events table.
+     *
+     * @var array
+     */
+    public static $queriesSchema = [
+        'fields' => [
+            [
+                'name' => 'query',
+                'type' => 'STRING',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'query_time',
+                'type' => 'STRING',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'bindings',
+                'type' => 'RECORD',
+                'mode' => 'REPEATED',
+                "fields"=> [
+                    [ "name"=> "key", "type"=> "STRING"],
+                    [ "name"=> "value", "type"=> "STRING"]
+                ]
+            ],
+            [
+                'name' => 'time',
+                'type' => 'DATETIME',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'app_id',
+                'type' => 'STRING',
+                'mode' => 'REQUIRED'
+            ],
+            [
+                'name' => 'url',
+                'type' => 'STRING'
+            ],
+            [
+                'name' => 'method',
+                'type' => 'STRING'
+            ],
+            [
+                'name' => 'params',
+                'type' => 'RECORD',
+                'mode' => 'REPEATED',
+                "fields"=> [
+                    [ "name"=> "key", "type"=> "STRING"],
+                    [ "name"=> "value", "type"=> "STRING"]
+                ]
+            ],
+        ]
+    ];
+
+    /**
      * Sample func
      *
      * @return string
@@ -354,5 +410,39 @@ class Monitor
             $data['params'][] = ['key'=>$k,'value'=>$v];
         }
         return self::storeData('monitor','events',$data);
+    }
+
+    /**
+     * Prepare request info (for errors)
+     * @param  string $query
+     * @param  array $bindings
+     * @param  string $query_time
+     * @return array
+     */
+    public function storeQuery($query,$bindings,$query_time)
+    {
+        // store data
+        $time = Carbon::now()->toDateTimeString();
+        $app_id = config('state-monitor.app-name');
+        $url = request()->url();
+        $params = request()->all();
+        $method = request()->getMethod();
+        $data = [
+            'time' => $time,
+            'app_id' => $app_id,
+            'url' => $url,
+            'method' => $method,
+            'params' => [],
+            'query' => $query,
+            'bindings' => [],
+            'query_time' => $query_time,
+        ];
+        foreach ($params as $k=>$v){
+            $data['params'][] = ['key'=>$k,'value'=>$v];
+        }
+        foreach ($bindings as $k=>$v){
+            $data['params'][] = ['key'=>$k,'value'=>$v];
+        }
+        return self::storeData('monitor','queries',$data);
     }
 }
