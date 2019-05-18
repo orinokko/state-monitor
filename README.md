@@ -90,12 +90,12 @@ Also exist middleware for custom routes and other:
 ### Checks monitoring
 Called manually
 ```php
-Monitor::validateRequest($type,$url,$method,$params=[])
+Monitor::validateRequest($type,$url,$method,$params=[],$user='',$domain='')
 ```
 ### Events monitoring
 Called manually
 ```php
-Monitor::storeEvent($message,$url='',$method='',$params=[])
+Monitor::storeEvent($message,$priority=0,$url='',$method='',$params=[],$user='',$domain='')
 ```
 ### Database monitoring
 If STATE_MONITOR_LOG_QUERIES is enabled, it will automatically log all queries to the appropriate table. 
