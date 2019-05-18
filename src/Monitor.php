@@ -17,26 +17,31 @@ class Monitor
     public static $errorsSchema = [
         'fields' => [
             [
+                'description' => 'Current time (DATETIME)',
                 'name' => 'time',
                 'type' => 'DATETIME',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'key of current installation',
                 'name' => 'app_id',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'url where was this error',
                 'name' => 'url',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'request method',
                 'name' => 'method',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'request params',
                 'name' => 'params',
                 'type' => 'RECORD',
                 'mode' => 'REPEATED',
@@ -46,26 +51,31 @@ class Monitor
                 ]
             ],
             [
+                'description' => 'response code',
                 'name' => 'code',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'error message',
                 'name' => 'message',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'filepath where was an error',
                 'name' => 'file',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'line of file where was an error',
                 'name' => 'line',
                 'type' => 'INTEGER',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'request headers',
                 'name' => 'headers',
                 'type' => 'RECORD',
                 'mode' => 'REPEATED',
@@ -75,6 +85,7 @@ class Monitor
                 ]
             ],
             [
+                'description' => 'error trace',
                 'name' => 'trace',
                 'type' => 'RECORD',
                 'mode' => 'REPEATED',
@@ -94,36 +105,53 @@ class Monitor
     public static $checksSchema = [
         'fields' => [
             [
+                'description' => 'user\tenant id',
+                'name' => 'user',
+                'type' => 'STRING'
+            ],
+            [
+                'description' => 'domain key',
+                'name' => 'domain',
+                'type' => 'STRING'
+            ],
+            [
+                'description' => 'request direction (incoming|outgoing)',
                 'name' => 'type',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'result status',
                 'name' => 'status',
                 'type' => 'BOOLEAN',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'Current time DATETIME',
                 'name' => 'time',
                 'type' => 'DATETIME',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'key of current installation',
                 'name' => 'app_id',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'url of the request',
                 'name' => 'url',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'method of the request',
                 'name' => 'method',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'params of the request',
                 'name' => 'params',
                 'type' => 'RECORD',
                 'mode' => 'REPEATED',
@@ -143,29 +171,45 @@ class Monitor
     public static $eventsSchema = [
         'fields' => [
             [
+                'description' => 'user\tenant id',
+                'name' => 'user',
+                'type' => 'STRING'
+            ],
+            [
+                'description' => 'domain key',
+                'name' => 'domain',
+                'type' => 'STRING'
+            ],
+            [
+                'description' => 'event name/description/message',
                 'name' => 'message',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'Current time DATETIME',
                 'name' => 'time',
                 'type' => 'DATETIME',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'key of current installation',
                 'name' => 'app_id',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'url of the request',
                 'name' => 'url',
                 'type' => 'STRING'
             ],
             [
+                'description' => 'method of the request',
                 'name' => 'method',
                 'type' => 'STRING'
             ],
             [
+                'description' => 'params of the request',
                 'name' => 'params',
                 'type' => 'RECORD',
                 'mode' => 'REPEATED',
@@ -185,16 +229,19 @@ class Monitor
     public static $queriesSchema = [
         'fields' => [
             [
+                'description' => 'sql query',
                 'name' => 'query',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'time for execution',
                 'name' => 'query_time',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'params of the query',
                 'name' => 'bindings',
                 'type' => 'RECORD',
                 'mode' => 'REPEATED',
@@ -204,24 +251,29 @@ class Monitor
                 ]
             ],
             [
+                'description' => 'Current time DATETIME',
                 'name' => 'time',
                 'type' => 'DATETIME',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'key of current installation',
                 'name' => 'app_id',
                 'type' => 'STRING',
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'url of the request',
                 'name' => 'url',
                 'type' => 'STRING'
             ],
             [
+                'description' => 'method of the request',
                 'name' => 'method',
                 'type' => 'STRING'
             ],
             [
+                'description' => 'params of the request',
                 'name' => 'params',
                 'type' => 'RECORD',
                 'mode' => 'REPEATED',
@@ -357,11 +409,13 @@ class Monitor
      * Validate request
      * @param  string $type - request direction (incoming|outgoing)
      * @param  string $url - url of the request
-     * @param  string $method - method od the request
+     * @param  string $method - method of the request
      * @param  array $params - params of the request, array(key=>value,key2=>value2)
+     * @param  string $user - user\tenant id
+     * @param  string $domain - domain key
      * @return bool
      */
-    public function validateRequest($type,$url,$method,$params=[])
+    public function validateRequest($type,$url,$method,$params=[],$user='',$domain='')
     {
         $status = true;
         // ToDo: some validation logic for status
@@ -377,6 +431,8 @@ class Monitor
             'params' => [],
             'type' => $type,
             'status' => $status,
+            'user' => $user,
+            'domain' => $domain,
         ];
         foreach ($params as $k=>$v){
             $data['params'][] = ['key'=>$k,'value'=>$v];
@@ -389,11 +445,13 @@ class Monitor
      * Store custom event
      * @param  string $message - event description
      * @param  string $url - url of the request
-     * @param  string $method - method od the request
+     * @param  string $method - method of the request
      * @param  array $params - params of the request, array(key=>value,key2=>value2)
+     * @param  string $user - user\tenant id
+     * @param  string $domain - domain key
      * @return array
      */
-    public function storeEvent($message,$url='',$method='',$params=[])
+    public function storeEvent($message,$url='',$method='',$params=[],$user='',$domain='')
     {
         // store data
         $time = Carbon::now()->toDateTimeString();
@@ -405,6 +463,8 @@ class Monitor
             'method' => $method,
             'params' => [],
             'message' => $message,
+            'user' => $user,
+            'domain' => $domain,
         ];
         foreach ($params as $k=>$v){
             $data['params'][] = ['key'=>$k,'value'=>$v];
