@@ -187,6 +187,11 @@ class Monitor
                 'mode' => 'REQUIRED'
             ],
             [
+                'description' => 'event priority (0-min-normal, >0 - need attention, 10-max)',
+                'name' => 'priority',
+                'type' => 'INTEGER'
+            ],
+            [
                 'description' => 'Current time DATETIME',
                 'name' => 'time',
                 'type' => 'DATETIME',
@@ -444,6 +449,7 @@ class Monitor
     /**
      * Store custom event
      * @param  string $message - event description
+     * @param  integer $priority - event priority (0-min-normal, >0 - need attention, 10-max)
      * @param  string $url - url of the request
      * @param  string $method - method of the request
      * @param  array $params - params of the request, array(key=>value,key2=>value2)
@@ -451,7 +457,7 @@ class Monitor
      * @param  string $domain - domain key
      * @return array
      */
-    public function storeEvent($message,$url='',$method='',$params=[],$user='',$domain='')
+    public function storeEvent($message,$priority=0,$url='',$method='',$params=[],$user='',$domain='')
     {
         // store data
         $time = Carbon::now()->toDateTimeString();
@@ -465,6 +471,7 @@ class Monitor
             'message' => $message,
             'user' => $user,
             'domain' => $domain,
+            'priority' => $priority,
         ];
         foreach ($params as $k=>$v){
             $data['params'][] = ['key'=>$k,'value'=>$v];
