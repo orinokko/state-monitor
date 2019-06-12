@@ -310,6 +310,8 @@ class Monitor
      */
     public static function storeData($dataset_id,$table_id,$data)
     {
+        putenv('GOOGLE_CLOUD_PROJECT='.config('state-monitor.bigquery-project'));
+        putenv('GOOGLE_APPLICATION_CREDENTIALS='.base_path().config('state-monitor.bigquery-path'));
         $bigQuery = new BigQueryClient();
         $dataset = $bigQuery->dataset($dataset_id);
         $table = $dataset->table($table_id);
