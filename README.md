@@ -77,7 +77,7 @@ Table for queries already exist.
 ### 4. Publish assets
 
 ```bash
-php artisan monitor:install
+php artisan vendor:publish --provider='Orinoko\StateMonitor\MonitorServiceProvider' --tag='public' --force
 ```
 
 ## Advices
@@ -104,5 +104,18 @@ Monitor::storeEvent($message,$priority=0,$url='',$method='',$params=[],$user='',
 ```
 ### Database monitoring
 If STATE_MONITOR_LOG_QUERIES is enabled, it will automatically log all queries to the appropriate table. 
+
+### Front
+After publishing assets add to html
+```html
+<script src="/vendor/state-monitor/js/monitor.js"></script>
+```
+Calling
+```js
+<script>
+    if (typeof monitorAddEvent === "function")
+        monitorAddEvent('Page http://phplaravel-135581-835906.cloudwaysapps.com loaded');
+</script>
+```
 ## Contribution
 <a href="https://www.buymeacoffee.com/ZArpFcduz" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>

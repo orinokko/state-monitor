@@ -4,7 +4,7 @@ namespace Orinoko\StateMonitor\Http;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Orinoko\StateMonitor\Monitor;
+use Orinoko\StateMonitor\Facades\Monitor as MonitorFacade;
 
 class MonitorController //extends Controller
 {
@@ -19,9 +19,9 @@ class MonitorController //extends Controller
         $priority = $request->input('priority',0);
         $url = $request->input('url','');
         $method = $request->input('method','');
-        $params = $request->input('params',[]);
+        $params = [];
         $user = $request->input('user','');
         $domain = $request->input('domain','');
-        Monitor::storeEvent($message,$priority,$url,$method,$params,$user,$domain);
+        MonitorFacade::storeEvent($message,$priority,$url,$method,$params,$user,$domain);
     }
 }

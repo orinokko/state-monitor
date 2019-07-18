@@ -1,4 +1,4 @@
-function monitorAddEvent(message,priority,url,method,params,user,domain) {
+function monitorAddEvent(message,priority,url,method,user,domain) {
     if (message === null || typeof message == "undefined")
         message = '';
     if (priority === null || typeof priority == "undefined")
@@ -7,8 +7,6 @@ function monitorAddEvent(message,priority,url,method,params,user,domain) {
         url = '';
     if (method === null || typeof method == "undefined")
         method = '';
-    if (params === null || typeof params == "undefined")
-        params = [];
     if (user === null || typeof user == "undefined")
         user = '';
     if (domain === null || typeof domain == "undefined")
@@ -19,7 +17,7 @@ function monitorAddEvent(message,priority,url,method,params,user,domain) {
     xhr.open('POST', '/monitorAddEvent');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
-        if (xhr.status === 200 && xhr.responseText !== newName) {
+        if (xhr.status === 200) {
             //alert('Something went wrong.  Name is now ' + xhr.responseText);
             console.log('ok');
         }
@@ -32,7 +30,6 @@ function monitorAddEvent(message,priority,url,method,params,user,domain) {
         priority: priority,
         url: url,
         method: method,
-        params: params,
         user: user,
         domain: domain,
     }));
