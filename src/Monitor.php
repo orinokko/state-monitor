@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Orinoko\StateMonitor\Mail\ErrorHandled;
 use Google\Cloud\BigQuery\BigQueryClient;
+use Cookie;
 
 class Monitor
 {
@@ -94,6 +95,11 @@ class Monitor
                     [ "name"=> "line", "type"=> "INTEGER"]
                 ]
             ],
+            [
+                'description' => 'tracker id',
+                'name' => 'uid',
+                'type' => 'STRING'
+            ],
         ]
     ];
 
@@ -160,6 +166,11 @@ class Monitor
                     [ "name"=> "value", "type"=> "STRING"]
                 ]
             ],
+            [
+                'description' => 'tracker id',
+                'name' => 'uid',
+                'type' => 'STRING'
+            ],
         ]
     ];
 
@@ -222,6 +233,11 @@ class Monitor
                     [ "name"=> "key", "type"=> "STRING"],
                     [ "name"=> "value", "type"=> "STRING"]
                 ]
+            ],
+            [
+                'description' => 'tracker id',
+                'name' => 'uid',
+                'type' => 'STRING'
             ],
         ]
     ];
@@ -287,6 +303,11 @@ class Monitor
                     [ "name"=> "value", "type"=> "STRING"]
                 ]
             ],
+            [
+                'description' => 'tracker id',
+                'name' => 'uid',
+                'type' => 'STRING'
+            ],
         ]
     ];
 
@@ -316,6 +337,10 @@ class Monitor
         $dataset = $bigQuery->dataset($dataset_id);
         $table = $dataset->table($table_id);
 
+        $uid = Cookie::get('WWUID');
+        if($uid){
+            $data['uid'] = $uid;
+        }
         $insertResponse = $table->insertRows([
             ['data' => $data],
             // additional rows can go here
