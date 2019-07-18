@@ -337,7 +337,7 @@ class Monitor
         $dataset = $bigQuery->dataset($dataset_id);
         $table = $dataset->table($table_id);
 
-        $uid = Cookie::get('WWUID');
+        $uid = $_COOKIE['WWUID'];//Cookie::get('WWUID');
         if($uid){
             $data['uid'] = $uid;
         }
