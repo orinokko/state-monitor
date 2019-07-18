@@ -23,6 +23,10 @@ class MonitorServiceProvider extends ServiceProvider
             __DIR__.'/config/state-monitor.php' => config_path('state-monitor.php')
         ], 'config');
 
+        $this->publishes([
+            __DIR__.'/assets' => public_path('vendor/state-monitor')
+        ], 'public');
+
         putenv('GOOGLE_CLOUD_PROJECT='.config('state-monitor.bigquery-project'));
         putenv('GOOGLE_APPLICATION_CREDENTIALS='.base_path().config('state-monitor.bigquery-path'));
 
