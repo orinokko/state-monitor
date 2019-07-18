@@ -74,6 +74,11 @@ Table for checks already exist.
 Table for events already exist.
 Table for queries already exist.
 ```
+### 4. Publish assets
+
+```bash
+php artisan monitor:install
+```
 
 ## Advices
 ### If the site package is used in different applications
