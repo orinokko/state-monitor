@@ -34,7 +34,13 @@
         }
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit",
+        "post-install-cmd": [
+            "php artisan vendor:publish --provider='Orinoko\\StateMonitor\\MonitorServiceProvider' --tag='public' --force"
+        ],
+        "post-update-cmd": [
+            "php artisan vendor:publish --provider='Orinoko\\StateMonitor\\MonitorServiceProvider' --tag='public' --force"
+        ]
     },
     "config": {
         "sort-packages": true
