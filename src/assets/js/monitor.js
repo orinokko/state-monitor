@@ -19,7 +19,7 @@ function monitorAddEvent(message,priority,url,method,user,domain) {
     xhr.onload = function() {
         if (xhr.status === 200) {
             //alert('Something went wrong.  Name is now ' + xhr.responseText);
-            console.log('ok');
+            //console.log('ok');
         }
         else if (xhr.status !== 200) {
             console.error('monitor call failed! status: '+xhr.status);
