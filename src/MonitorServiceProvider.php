@@ -34,8 +34,10 @@ class MonitorServiceProvider extends ServiceProvider
         }
 
         // middleware
-        $this->app['router']->pushMiddlewareToGroup('web', Http\Middleware\MonitorErrors::class);
-        $this->app['router']->pushMiddlewareToGroup('api', Http\Middleware\MonitorErrors::class);
+        if(config('state-monitor.use-middleware-web'))
+            $this->app['router']->pushMiddlewareToGroup('web', Http\Middleware\MonitorErrors::class);
+        if(config('state-monitor.use-middleware-api'))
+            $this->app['router']->pushMiddlewareToGroup('api', Http\Middleware\MonitorErrors::class);
 
         if(config('state-monitor.log-queries')) { // ToDo: remote control
             DB::listen(function ($query) {
