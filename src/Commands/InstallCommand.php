@@ -78,8 +78,12 @@ class InstallCommand extends Command
         }
         if($useBigQuery){
             if($projectBigQuery && $keyBigQuery) {
+                //putenv('GOOGLE_CLOUD_PROJECT='.config('state-monitor.bigquery-project'));
+                //putenv('GOOGLE_APPLICATION_CREDENTIALS='.base_path().config('state-monitor.bigquery-path'));
                 try {
-                    $bigQuery = new BigQueryClient();
+                    $bigQuery = new BigQueryClient([
+                        'keyFilePath' => base_path().config('state-monitor.bigquery-path')
+                    ]);
                 } catch (DomainException $exception) {
                     $this->error($exception->getMessage());
                 }

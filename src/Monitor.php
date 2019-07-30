@@ -331,9 +331,14 @@ class Monitor
      */
     public static function storeData($dataset_id,$table_id,$data)
     {
-        putenv('GOOGLE_CLOUD_PROJECT='.config('state-monitor.bigquery-project'));
-        putenv('GOOGLE_APPLICATION_CREDENTIALS='.base_path().config('state-monitor.bigquery-path'));
-        $bigQuery = new BigQueryClient();
+        //putenv('GOOGLE_CLOUD_PROJECT='.config('state-monitor.bigquery-project'));
+        //putenv('GOOGLE_APPLICATION_CREDENTIALS='.base_path().config('state-monitor.bigquery-path'));
+        if(!config('state-monitor.bigquery-path')){
+            return ['error'=>1,'errors'=>['No keyfile path']];
+        }
+        $bigQuery = new BigQueryClient([
+            'keyFilePath' => base_path().config('state-monitor.bigquery-path')
+        ]);
         $dataset = $bigQuery->dataset($dataset_id);
         $table = $dataset->table($table_id);
 
