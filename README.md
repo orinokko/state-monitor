@@ -38,6 +38,11 @@ Whether or not to log queries
 ```
 STATE_MONITOR_LOG_QUERIES=false
 ```
+Enable or disable kernel middleware (default "true"-enabled)
+```
+STATE_MONITOR_MIDDLEWARE_WEB=false
+STATE_MONITOR_MIDDLEWARE_API=false
+```
 
 ### 3. Run config test and installation
 
@@ -66,6 +71,8 @@ STATE_MONITOR_BIGQUERY=1
 STATE_MONITOR_GOOGLE_CLOUD_PROJECT=monitor
 STATE_MONITOR_GOOGLE_APPLICATION_CREDENTIALS=/storage/monitor.json
 STATE_MONITOR_LOG_QUERIES=1
+STATE_MONITOR_MIDDLEWARE_WEB=
+STATE_MONITOR_MIDDLEWARE_API=
 Local email channel disabled.
 BigQuery channel activated and connection settings provided. Try configure the database...
 Dataset already exist.
@@ -88,6 +95,8 @@ Ensure that real data is listed in APP_NAME and APP_URL. They are can be used to
 ## Usage
 ### Exceptions monitoring
 Exceptions automatically will be caught on web and api middleware groups.
+You can disable this middleware in .env file.
+
 Also exist middleware for custom routes and other:
 ```php
 ->middleware('state-monitor-errors')

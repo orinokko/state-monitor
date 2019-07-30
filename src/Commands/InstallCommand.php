@@ -49,6 +49,8 @@ class InstallCommand extends Command
         $projectBigQuery = config('state-monitor.bigquery-project');
         $keyBigQuery = config('state-monitor.bigquery-path');
         $logQueries = config('state-monitor.log-queries');
+        $webMiddleware = config('state-monitor.use-middleware-web');
+        $apiMiddleware = config('state-monitor.use-middleware-api');
         $this->info('Current settings:');
         $this->line('STATE_MONITOR_APP='.$appName);
         $this->line('STATE_MONITOR_LOCAL_EMAIL='.$useLocal);
@@ -57,6 +59,8 @@ class InstallCommand extends Command
         $this->line('STATE_MONITOR_GOOGLE_CLOUD_PROJECT='.$projectBigQuery);
         $this->line('STATE_MONITOR_GOOGLE_APPLICATION_CREDENTIALS='.$keyBigQuery);
         $this->line('STATE_MONITOR_LOG_QUERIES='.$logQueries);
+        $this->line('STATE_MONITOR_MIDDLEWARE_WEB='.$webMiddleware);
+        $this->line('STATE_MONITOR_MIDDLEWARE_API='.$apiMiddleware);
 
         if(!$appName){
             $this->error('You need to provide app identifier in STATE_MONITOR_APP.');

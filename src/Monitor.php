@@ -92,7 +92,7 @@ class Monitor
                 'mode' => 'REPEATED',
                 "fields"=> [
                     [ "name"=> "file", "type"=> "STRING"],
-                    [ "name"=> "line", "type"=> "INTEGER"]
+                    [ "name"=> "line", "type"=> "STRING"]
                 ]
             ],
             [
@@ -342,7 +342,7 @@ class Monitor
         $dataset = $bigQuery->dataset($dataset_id);
         $table = $dataset->table($table_id);
 
-        $uid = $_COOKIE['WWUID'];//Cookie::get('WWUID');
+        $uid = isset($_COOKIE['WWUID'])?$_COOKIE['WWUID']:null; //Cookie::get('WWUID');
         if($uid){
             $data['uid'] = $uid;
         }
@@ -436,7 +436,10 @@ class Monitor
             $data['headers'][] = ['key'=>$k,'value'=>$v];
         }
         foreach ($trace as $k=>$v){
-            $data['trace'][] = ['file'=>$v['file'],'line'=>$v['line']];
+            if(isset($v['file']) && isset($v['line']))
+                $data['trace'][] = ['file'=>$v['file'],'line'=>$v['line']];
+            else if(isset($v['class']) && isset($v['function']))
+                $data['trace'][] = ['file'=>$v['class'],'line'=>$v['function']];
         }
 
         return self::storeData('monitor','errors',$data);
