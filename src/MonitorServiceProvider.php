@@ -30,6 +30,7 @@ class MonitorServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Commands\InstallCommand::class,
+                Commands\CleanCommand::class,
             ]);
         }
 
