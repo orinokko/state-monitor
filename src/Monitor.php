@@ -352,7 +352,7 @@ class Monitor
                 // additional rows can go here
             ]);
         } catch (\Google\Cloud\Core\Exception\ServiceException $e) {
-
+            return ['error'=>1,'message'=>$e->getMessage()];
         }
         if ($insertResponse->isSuccessful()) {
             return ['error'=>0];
