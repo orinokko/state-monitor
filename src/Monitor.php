@@ -346,10 +346,14 @@ class Monitor
         if($uid){
             $data['uid'] = $uid;
         }
-        $insertResponse = $table->insertRows([
-            ['data' => $data],
-            // additional rows can go here
-        ]);
+        try {
+            $insertResponse = $table->insertRows([
+                ['data' => $data],
+                // additional rows can go here
+            ]);
+        } catch (\Google\Cloud\Core\Exception\ServiceException $e) {
+
+        }
         if ($insertResponse->isSuccessful()) {
             return ['error'=>0];
         } else {
