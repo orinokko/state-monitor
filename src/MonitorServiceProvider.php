@@ -31,6 +31,7 @@ class MonitorServiceProvider extends ServiceProvider
             $this->commands([
                 Commands\InstallCommand::class,
                 Commands\CleanCommand::class,
+                Commands\CleanAllCommand::class,
             ]);
         }
 
